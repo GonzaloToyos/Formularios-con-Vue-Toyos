@@ -1,20 +1,19 @@
 <template>
   <div>
-    <div class="about" v-for="user in users" :key="user.id">
-      <p>Nombre: {{user.Nombre}}</p>
-      <p>Correo: {{user.Correo}}</p>
-      <p>Contraseña: {{user.Password}}</p>
-      <p>Edad: {{user.Edad}}</p>
+    <div class="about" v-for="usuario in usuarios" :key="usuario.id">
+      <p>Nombre: {{usuario.Nombre}}</p>
+      <p>Correo: {{usuario.Correo}}</p>
+      <p>Contraseña: {{usuario.Password}}</p>
+      <p>Edad: {{usuario.Edad}}</p>
     </div>
   </div>
 </template>
 
 <script>
-//importar libreria
-import axios from "axios";
+import { mapActions, mapState} from 'vuex'
 
 export default {
-  name: "AxiosImage",
+  name: "DesafioForm",
 
   data() {
     return {
@@ -23,9 +22,20 @@ export default {
   },
 
   async created() {
-    let url = "https://6242550cb6734894c14f948b.mockapi.io/users";
-    await axios.get(url).then((response) => (this.users = response.data));
+    this.obtenerUsers();
   },
+
+  computed: {
+    ...mapState([
+      'usuarios'
+    ])
+  },
+
+  methods: {
+    ...mapActions([
+      'obtenerUsers'
+    ])
+  }
 };
 </script>
 
@@ -36,5 +46,6 @@ export default {
   width: 250px;
   height: auto;
   margin: auto;
+  margin-bottom: 10px;
 }
 </style>
